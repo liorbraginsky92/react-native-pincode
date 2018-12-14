@@ -1,8 +1,8 @@
 /// <reference types="react" />
-import * as React from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { PinStatus } from './PinCode';
-import { PinResultStatus } from '../index';
+import * as React from "react";
+import { StyleProp, TextStyle, ViewStyle } from "react-native";
+import { PinStatus } from "./PinCode";
+import { PinResultStatus } from "../index";
 /**
  * Pin Code Enter PIN Page
  */
@@ -67,6 +67,7 @@ export declare type IProps = {
     pinCodeVisible?: boolean;
     textPasswordVisibleSize?: number;
     textPasswordVisibleFamily?: string;
+    endProcessFunction?: (pinCode: string) => void;
 };
 export declare type IState = {
     pinCodeStatus: PinResultStatus;
@@ -75,9 +76,9 @@ export declare type IState = {
 declare class PinCodeEnter extends React.PureComponent<IProps, IState> {
     keyChainResult: string | undefined;
     constructor(props: IProps);
-    componentWillReceiveProps(nextProps: IProps): void;
     componentWillMount(): Promise<void>;
     componentDidMount(): void;
+    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, prevContext: any): void;
     endProcess: (pinCode?: string | undefined) => Promise<void>;
     launchTouchID(): Promise<void>;
     render(): JSX.Element;

@@ -90,7 +90,7 @@ class PinCode extends React.PureComponent {
                     ? this.props.styleButtonCircle
                     : styles.buttonCircle, underlayColor: this.props.numbersButtonOverlayColor
                     ? this.props.numbersButtonOverlayColor
-                    : colors_1.colors.turquoise, disabled: disabled, onShowUnderlay: () => this.setState({ textButtonSelected: text }), onHideUnderlay: () => this.setState({ textButtonSelected: '' }), onPress: () => {
+                    : 'transparent', onShowUnderlay: () => this.setState({ textButtonSelected: text }), onHideUnderlay: () => this.setState({ textButtonSelected: '' }), onPress: () => {
                     this.onPressButtonNumber(text);
                 } },
                 React.createElement(react_native_1.Text, { style: [
@@ -99,13 +99,7 @@ class PinCode extends React.PureComponent {
                             : styles.text,
                         {
                             opacity: opacity,
-                            color: this.state.textButtonSelected === text
-                                ? this.props.styleColorButtonTitleSelected
-                                    ? this.props.styleColorButtonTitleSelected
-                                    : colors_1.colors.white
-                                : this.props.styleColorButtonTitle
-                                    ? this.props.styleColorButtonTitle
-                                    : colors_1.colors.grey
+                            color: '#474747'
                         }
                     ] }, text)))));
         };
@@ -138,13 +132,10 @@ class PinCode extends React.PureComponent {
                         y: 0
                     }, update: {
                         x: [moveData.x],
-                        opacity: [lengthSup ? 1 : 0.5],
-                        height: [
-                            lengthSup ? this._circleSizeFull : this._circleSizeEmpty
-                        ],
-                        width: [
-                            lengthSup ? this._circleSizeFull : this._circleSizeEmpty
-                        ],
+                        height: 50,
+                        width: 50,
+                        opacity: 0.5,
+                        borderRadius: 25,
                         color: [
                             showError
                                 ? this.props.colorPasswordError
@@ -154,33 +145,18 @@ class PinCode extends React.PureComponent {
                                     ? this.props.colorPassword
                                     : colors_1.colors.turquoise
                         ],
-                        borderRadius: [
-                            lengthSup
-                                ? this._circleSizeFull / 2
-                                : this._circleSizeEmpty / 2
-                        ],
-                        marginRight: [
-                            lengthSup
-                                ? 10 - (this._circleSizeFull - this._circleSizeEmpty) / 2
-                                : 10
-                        ],
-                        marginLeft: [
-                            lengthSup
-                                ? 10 - (this._circleSizeFull - this._circleSizeEmpty) / 2
-                                : 10
-                        ],
                         y: [moveData.y],
                         timing: { duration: 200, ease: d3_ease_1.easeLinear }
                     } }, ({ opacity, x, height, width, color, borderRadius, marginRight, marginLeft }) => (React.createElement(react_native_1.View, { style: styles.viewCircles }, ((!this.props.pinCodeVisible ||
                     (this.props.pinCodeVisible && !lengthSup)) && (React.createElement(react_native_1.View, { style: {
                         left: x,
-                        height: height,
-                        width: width,
-                        opacity: opacity,
-                        borderRadius: borderRadius,
+                        height: 50,
+                        width: 50,
+                        opacity: 0.5,
+                        borderRadius: 25,
                         marginLeft: marginLeft,
                         marginRight: marginRight,
-                        backgroundColor: color
+                        backgroundColor: '#00B1FF'
                     } }))) || (React.createElement(react_native_1.View, { style: {
                         left: x,
                         opacity: opacity,
@@ -234,7 +210,7 @@ class PinCode extends React.PureComponent {
                     this.props.styleTextTitle
                         ? this.props.styleTextTitle
                         : styles.textTitle,
-                    { color: colorTitle, opacity: opacityTitle }
+                    { color: colorTitle, opacity: 1.0 }
                 ] }, (attemptFailed && this.props.titleAttemptFailed) ||
                 (showError && this.props.titleConfirmFailed) ||
                 (showError && this.props.titleValidationFailed) ||
@@ -264,28 +240,18 @@ class PinCode extends React.PureComponent {
         this._circleSizeEmpty = this.props.styleCircleSizeEmpty || 4;
         this._circleSizeFull =
             this.props.styleCircleSizeFull || (this.props.pinCodeVisible ? 6 : 8);
-        this.renderButtonNumber = this.renderButtonNumber.bind(this);
-        this.renderCirclePassword = this.renderCirclePassword.bind(this);
-        this.doShake = this.doShake.bind(this);
-        this.showError = this.showError.bind(this);
-        this.endProcess = this.endProcess.bind(this);
-        this.failedAttempt = this.failedAttempt.bind(this);
-        this.newAttempt = this.newAttempt.bind(this);
-        this.renderButtonDelete = this.renderButtonDelete.bind(this);
-        this.onPressButtonNumber = this.onPressButtonNumber.bind(this);
-        this.renderTitle = this.renderTitle.bind(this);
     }
     componentDidMount() {
         if (this.props.getCurrentLength)
             this.props.getCurrentLength(0);
     }
-    componentWillUpdate(nextProps) {
-        if (this.props.pinCodeStatus !== 'failure' &&
-            nextProps.pinCodeStatus === 'failure') {
+    componentDidUpdate(prevProps) {
+        if (prevProps.pinCodeStatus !== 'failure' &&
+            this.props.pinCodeStatus === 'failure') {
             this.failedAttempt();
         }
-        if (this.props.pinCodeStatus !== 'locked' &&
-            nextProps.pinCodeStatus === 'locked') {
+        if (prevProps.pinCodeStatus !== 'locked' &&
+            this.props.pinCodeStatus === 'locked') {
             this.setState({ password: '' });
         }
     }
@@ -343,7 +309,7 @@ class PinCode extends React.PureComponent {
                     colorTitle: [
                         this.props.styleColorTitle
                             ? this.props.styleColorTitle
-                            : colors_1.colors.grey
+                            : '#474747'
                     ],
                     colorSubtitle: [
                         this.props.styleColorSubtitle
@@ -361,7 +327,7 @@ class PinCode extends React.PureComponent {
                                 : colors_1.colors.alert
                             : this.props.styleColorTitle
                                 ? this.props.styleColorTitle
-                                : colors_1.colors.grey
+                                : '#474747'
                     ],
                     colorSubtitle: [
                         showError || attemptFailed
@@ -378,14 +344,11 @@ class PinCode extends React.PureComponent {
                     this.props.styleViewTitle
                         ? this.props.styleViewTitle
                         : styles.viewTitle,
-                    { opacity: opacity }
+                    { opacity: 1.0 }
                 ] },
                 this.props.titleComponent
                     ? this.props.titleComponent()
-                    : this.renderTitle(colorTitle, opacityTitle, attemptFailed, showError),
-                this.props.subtitleComponent
-                    ? this.props.subtitleComponent()
-                    : this.renderSubtitle(colorSubtitle, opacityTitle, attemptFailed, showError)))),
+                    : this.renderTitle(colorTitle, opacityTitle, attemptFailed, showError)))),
             React.createElement(react_native_1.View, { style: styles.flexCirclePassword }, this.props.passwordComponent
                 ? this.props.passwordComponent()
                 : this.renderCirclePassword()),
@@ -464,20 +427,20 @@ let styles = react_native_1.StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        flex: 2
+        flex: 1
     },
     row: {
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        height: grid_1.grid.unit * 5.5
+        height: 80
     },
     colButtonCircle: {
         marginLeft: grid_1.grid.unit / 2,
         marginRight: grid_1.grid.unit / 2,
         alignItems: 'center',
-        width: grid_1.grid.unit * 4,
-        height: grid_1.grid.unit * 4
+        width: 77,
+        height: 77
     },
     colEmpty: {
         marginLeft: grid_1.grid.unit / 2,
@@ -486,26 +449,28 @@ let styles = react_native_1.StyleSheet.create({
         height: grid_1.grid.unit * 4
     },
     colIcon: {
+        width: 77,
+        height: 77,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column'
     },
     text: {
-        fontSize: grid_1.grid.unit * 2,
-        fontWeight: '200'
+        fontSize: 24,
+        fontWeight: '200',
+        // color: '#474747'
     },
     buttonCircle: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: grid_1.grid.unit * 4,
-        height: grid_1.grid.unit * 4,
-        backgroundColor: 'rgb(242, 245, 251)',
+        width: 77,
+        height: 77,
+        backgroundColor: 'transparent',
         borderRadius: grid_1.grid.unit * 2
     },
     textTitle: {
-        fontSize: 20,
-        fontWeight: '200',
+        fontSize: 17,
+        fontFamily: 'SFProDisplay-Regular',
         lineHeight: grid_1.grid.unit * 2.5
     },
     textSubtitle: {
@@ -522,7 +487,8 @@ let styles = react_native_1.StyleSheet.create({
         flexDirection: 'row',
         height: 'auto',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 20
     },
     viewCircles: {
         justifyContent: 'center',
@@ -533,7 +499,7 @@ let styles = react_native_1.StyleSheet.create({
         marginTop: 5
     },
     grid: {
-        maxWidth: grid_1.grid.unit * 16.25,
-        flex: 7
+        maxWidth: 79,
+        flex: 8
     }
 });
