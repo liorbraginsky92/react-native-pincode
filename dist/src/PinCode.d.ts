@@ -76,11 +76,11 @@ export declare enum PinStatus {
     enter = "enter",
 }
 declare class PinCode extends React.PureComponent<IProps, IState> {
-    private readonly _circleSizeEmpty;
-    private readonly _circleSizeFull;
+    _circleSizeEmpty: number;
+    _circleSizeFull: number;
     constructor(props: IProps);
     componentDidMount(): void;
-    componentDidUpdate(prevProps: Readonly<IProps>): void;
+    componentWillUpdate(nextProps: IProps): void;
     failedAttempt: () => Promise<void>;
     newAttempt: () => Promise<void>;
     onPressButtonNumber: (text: string) => Promise<void>;

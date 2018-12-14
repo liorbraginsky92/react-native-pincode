@@ -16,7 +16,6 @@ export type IProps = {
   colorPassword?: string
   colorPasswordError?: string
   disableLockScreen?: boolean
-  endProcessFunction?: (pinCode: string) => void
   finishProcess?: any
   getCurrentPinLength?: (length: number) => void
   handleResultEnterPin?: any
@@ -297,7 +296,6 @@ class PINCode extends React.PureComponent<IProps, IState> {
           pinCodeVisible={this.props.pinCodeVisible}
           textPasswordVisibleSize={this.props.textPasswordVisibleSize}
           textPasswordVisibleFamily={this.props.textPasswordVisibleFamily}
-          endProcessFunction={this.props.endProcessFunction}
         />}
         {(pinStatus === PinResultStatus.locked ||
           this.state.internalPinStatus === PinResultStatus.locked ||
